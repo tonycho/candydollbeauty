@@ -77,8 +77,6 @@ a.brand {
 }
 
 .price .amount {
-  display: block;
-  padding-top: 5px;
   font-size: 22px;
   font-weight: normal;
 }
@@ -592,6 +590,27 @@ ins {
   float: none;
   margin-left: 10px;
   top: -2px;
+}
+
+#tab-additional_information h2 {
+  display: none;
+}
+
+.shop_attributes {
+  margin-top: -10px;
+}
+
+ul.top-nav .menu-item-7587 ul.sub-menu {
+  width: 600px;
+}
+
+ul.top-nav ul.sub-menu {
+  left: -25px;
+}
+
+ul.top-nav .menu-item-7587 ul.sub-menu li {
+    width: 30%;
+    display: inline-block;
 }
 
 textarea:focus,

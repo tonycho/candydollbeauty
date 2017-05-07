@@ -30,7 +30,7 @@ function woo_new_product_tab( $tabs ) {
 		// Adds the new tab
 
 		$tabs['instruction_tab'] = array(
-			'title' 	=> __( 'Instruction', 'woocommerce' ),
+			'title' 	=> __( '[:en]Instruction[:hk]使用說明[:zh]使用说明', 'woocommerce' ),
 			'priority' 	=> 20,
 			'callback' 	=> 'woo_new_product_tab_content'
 		);
@@ -41,4 +41,27 @@ function woo_new_product_tab( $tabs ) {
 function woo_new_product_tab_content() {
 	global $post;
 	echo get_post_meta($post->ID, 'instruction', true);
+}
+
+add_filter( 'woocommerce_product_tabs', 'woo_new_product_ingredients_tab' );
+function woo_new_product_ingredients_tab( $tabs ) {
+
+	global $post;
+	$ingredients = get_post_meta($post->ID, 'ingredients', true);
+
+	if ($ingredients != "") {
+		// Adds the new tab
+
+		$tabs['ingredients_tab'] = array(
+			'title' 	=> __( '[:en]Ingredients[:hk]成份[:zh]成份', 'woocommerce' ),
+			'priority' 	=> 20,
+			'callback' 	=> 'woo_new_product_ingredients_tab_content'
+		);
+	}
+
+	return $tabs;
+}
+function woo_new_product_ingredients_tab_content() {
+	global $post;
+	echo get_post_meta($post->ID, 'ingredients', true);
 }
