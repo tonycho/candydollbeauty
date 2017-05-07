@@ -19,13 +19,6 @@ global $post, $product;
 		<span itemprop="productID" class="sku_wrapper"><?php _e( 'SKU:', 'jawtemplates' ); ?> <span class="sku" itemprop="sku"><?php echo $product->get_sku(); ?></span></span>
 	<?php endif; ?>
 <?php } ?>
-
-	<?php if (jwOpt::get_option('woo_product_tags', '1') == '1') {
-		$size = sizeof( get_the_terms( $post->ID, 'product_tag' ) );
-		echo wc_get_product_tag_list($post->ID,', ', '<span class="tagged_as">' . _n( 'Tag:', 'Tags:', $size, 'jawtemplates' ) . ' ', '</span>' );}
-		//echo $product->get_tags( ', ', '<span class="tagged_as">' . _n( 'Tag:', 'Tags:', $size, 'jawtemplates' ) . ' ', '</span>' );} woo v3 deprecated
-	?>
-
 	<?php do_action( 'woocommerce_product_meta_end' ); ?>
 
 </div>
