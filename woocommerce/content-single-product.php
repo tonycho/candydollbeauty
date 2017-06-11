@@ -8,6 +8,7 @@
  * @package 	WooCommerce/Templates
  * @version     3.0.0
  */
+echo "TESTING IS AWOEM";
 if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 

@@ -45,27 +45,21 @@ if (jwOpt::get_option('top_bar_login_button', '0') == '0' && jwOpt::get_option('
                 if (is_user_logged_in()) {
                     $text = __('[:en]My account[:hk]我的帳戶[:zh]我的帳戶', 'jawtemplates');
                 } else {
-                    $text = __('[:en]Login[:hk]登入[:zh]登入', 'jawtemplates');
+                    $text = __('[:en]Login / Register[:hk]登入/注冊[:zh]登入/注冊', 'jawtemplates');
                 }
                 ?>
                 <a href="<?php echo $myaccount_page_url; ?>">
-                    <span class="topbar-title-text">                        
+                    <span class="topbar-title-icon icon-user"></span>
+                    <span class="topbar-title-text">
                         <?php echo $text; ?>
                     </span>
                 </a>
-                <?php if (!is_user_logged_in()) { ?>
-                    <a href="<?php echo $myaccount_page_url; ?>">
-                        <span class="topbar-title-text">                        
-                            <?php echo __("[:en]Register[:zh]注冊[:hk]注冊"); ?>
-                        </span>
-                    </a>                            
-                <? } ?>
                 <?php
                 $class = '';
                 if (class_exists('WooCommerce') && is_user_logged_in()) {
                     $class = 'woo-menu';
                 }
-                ?>         
+                ?>
             </li>
         <?php } ?>
         <?php if (class_exists('YITH_Woocompare') && class_exists('WooCommerce')) { ?>
@@ -75,8 +69,8 @@ if (jwOpt::get_option('top_bar_login_button', '0') == '0' && jwOpt::get_option('
                 </li>
             <?php } ?>
         <?php } ?>
-        
-        
+
+
         <?php if (is_plugin_active('yith-woocommerce-wishlist/init.php') && class_exists('WooCommerce')) { ?>
             <?php if (jwOpt::get_option('top_bar_wishllist', '1') == '1') { ?>
                 <li class="wishlist-contents">
@@ -95,7 +89,7 @@ if (jwOpt::get_option('top_bar_login_button', '0') == '0' && jwOpt::get_option('
 
 
 
-        <?php if (jwOpt::get_option('top_bar_search', '1') == '1') { ?>    
+        <?php if (jwOpt::get_option('top_bar_search', '1') == '1') { ?>
             <li>
                 <?php
                 if (jwOpt::get_option('top_bar_search_type', 'wordpress') == 'woo' && class_exists('WooCommerce')) {
