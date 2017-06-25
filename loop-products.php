@@ -4,6 +4,24 @@ $content_width = jwLayout::content_width();
 
 jaw_template_inc_counter('pagination');
 
+if (is_tax( 'brands')) {
+    $cat = get_term_by('slug', get_query_var('term'), 'brands');
+    // var_dump($cat);
+
+
+    if ($cat->name || $cat->description) {
+        echo "<div class='brand-detail'>";
+          if ($cat->description) {
+            echo "<div class='brand-logo'><img src='/assets/images/brands/" . $cat->slug . ".png' /></div>";
+          }
+          echo "<div class='brand-description'>";
+            echo "<h1>" . $cat->name . "</h1>";
+            echo $cat->description;
+          echo "</div>";
+        echo "</div>";
+    }
+}
+
 if (function_exists('is_product') && !is_product()) {
     if (have_posts()) {
         ?><div class="<?php echo implode(' ', $content_width); ?> builder-section">
@@ -26,6 +44,7 @@ if (function_exists('is_product') && !is_product()) {
                 </div>
             </div> -->
             <?php
+            $cat = get_term_by('slug', get_query_var('term'), 'product_cat');
             $cat_display_type = '';
             if (isset($cat->term_id)) {
                 $cat_display_type = get_woocommerce_term_meta($cat->term_id, 'display_type', true);
@@ -35,17 +54,47 @@ if (function_exists('is_product') && !is_product()) {
                 $cat_display_type = '';
             }
             ?>
-            <?php if ($cat_display_type == 'subcategories' || $cat_display_type == 'both') { ?>
-                <div class="woocommerce  elements_iso row product_subcategories" >
-                    <?php woocommerce_product_subcategories(); ?>
-                </div>
+            <?php if ($cat_display_type == '' || $cat_display_type == 'subcategories' || $cat_display_type == 'both') { ?>
+                <!-- <div class="woocommerce row product_subcategories" >
+                    <?php //woocommerce_product_subcategories(); ?>
+                </div> -->
+                <?php
+                    if (function_exists('is_product_category') && is_product_category()) {
+                        $args = array(
+                            'parent' => $cat->term_id,
+                            'hide_empty' => false
+                        );
+
+                        $terms = get_terms('product_cat', $args);
+
+                        if ($terms) {
+                            echo '<div class="row">';
+                            echo '<div class="' . implode(' ', $content_width) . ' builder-section before_main_content ">';
+                            echo '<ul class="product-cats">';
+
+                            foreach ($terms as $term) {
+                                echo '<li>';
+                                echo '<a href="' .  esc_url(get_term_link($term)) . '" class="' . $term->slug . '">';
+                                echo $term->name;
+                                echo "&nbsp;(";
+                                echo $term->count;
+                                echo ")";
+                                echo '</a>';
+                                echo '</li>';
+                            }
+                            echo '</ul>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                    }
+                ?>
             <?php } ?>
             <?php if ($cat_display_type == '' || $cat_display_type == 'products' || $cat_display_type == 'both') { ?>
                 <div class="row category-bar">
                     <div class="col-lg-3">
                         <?php wc_get_template('loop/result-count.php'); ?>
                     </div>
-                    <div class="col-lg-<?php echo $col - 6; ?> pagination-header">
+                    <div class="col-lg-<?php echo 3; //$col - 6; ?> pagination-header">
                         <?php if (jwLayout::content_layout() == 'fullwidth_sidebar' && jwOpt::get_option('blog_pagination', 'number') == 'number') { ?>
                             <?php echo jwRender::pagination(jaw_template_get_var('pagination', jwOpt::get_option('blog_pagination', 'number')), null, 0); ?>
                         <?php } ?>

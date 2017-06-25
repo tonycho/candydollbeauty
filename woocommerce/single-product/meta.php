@@ -12,13 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $post, $product;
 ?>
 <div class="product_meta">
-<?php
-$args = array( 'taxonomy' => 'brands',);
-$terms = wp_get_post_terms(get_the_ID(),'brands', $args);
-
-
-echo $terms[0]->name;
- ?>
 	<?php do_action( 'woocommerce_product_meta_start' ); ?>
 <?php if (jwOpt::get_option('woo_skus', '1') == '1') { ?>
 	<?php if ( wc_product_sku_enabled() && ( $product->get_sku() || $product->is_type( 'variable' ) ) ) : ?>
