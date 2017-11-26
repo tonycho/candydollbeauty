@@ -1,0 +1,43 @@
+<div id="brand-initial">
+  <a href="#" id="all-brands">Brands</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<script type="text/javascript">
+  var first = "A",
+      last = "Z",
+      container = document.querySelector("#brand-initial");
+
+  for (var i = first.charCodeAt(0); i <= last.charCodeAt(0); i++) {
+    var char = eval("String.fromCharCode(" + i + ")") + "";
+    var el = document.createElement('a');
+    el.href = "#";
+    el.innerHTML = char;
+
+    container.append(el);
+    
+    el.addEventListener('click', filterBrands);
+  }
+
+  document.querySelector('#all-brands').addEventListener('click', filterBrands);
+  
+  function filterBrands(e) {
+    var selected = e.target.innerText;      
+    document.querySelectorAll('.top-nav .brands li').forEach(function(brand) {
+      var show = selected.toUpperCase() === 'BRANDS' || brand.innerText[0].toUpperCase() === selected;
+      brand.style.display = show ? 'block' : 'none';
+    });      
+  }
+</script>
+
+<?php
+
+$main_ingredients = get_terms('brands');
+
+echo '<ul class="brands">';
+foreach($main_ingredients as $brand) {
+  $link = get_term_link(intval($brand->term_id),'brands');
+  $title = $brand->name;
+  echo "<li><a href=\"{$link}\">{$title}</a></li>";
+}
+echo '</ul>';
+
+?>
